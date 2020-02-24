@@ -1,4 +1,4 @@
-#### rasberrypi.conf
+#### arm.conf
 CROSS_PREFIX		:= arm-linux-gnueabihf-
 OUTPUT			:= `pwd`/../output/pi/
 

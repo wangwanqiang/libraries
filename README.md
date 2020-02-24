@@ -1,77 +1,73 @@
-libraries [中文说明](README.cn.md) [![Build Status](https://travis-ci.org/gozfree/libraries.svg?branch=master)](https://travis-ci.org/gozfree/libraries)
-=========
+# Gear-Lib
+
+English | [简体中文](README.cn.md)
+
+[![Build](https://travis-ci.org/gozfree/gear-lib.svg?branch=master)](https://travis-ci.org/gozfree/gear-lib)
+[![Release](https://img.shields.io/github/release/gozfree/gear-lib.svg)](https://github.com/gozfree/gear-lib/releases)
+[![License](https://img.shields.io/github/license/gozfree/gear-lib.svg)](https://github.com/gozfree/gear-lib/blob/master/LICENSE.MIT)
+
 This is a collection of basic libraries.
-* All are written in POSIX C, aim to used compatibility on x86, arm, android, ios.
-* Each of library is as independently as possible, and the APIs are easily to use.
-* Depend on none of open source third party libraries.
-* Aim to reduce duplication of the wheel.
+* All are written in POSIX C, aim to used compatibility on linux, windows, android, ios.
+* Aim to reuse for IOT, embedded and network service development
 
-## Include
+## Data Struct
+* libdict: Hash key-value dictonary library
+* libhash: Hash key-value library based on hlist from kernel
+* libringbuffer:
+* libqueue: queue library, support memory hook
+* librbtree: comes from linux kernel rbtree.
+* libsort:
+* libvector:
+* libmacro: Basic Macro define library, include kernel list and so on
+* libdarray: Dynamic array
 
-| Library                 | Note                                                       |
-|-------------------------|------------------------------------------------------------|
-|  [libatomic](libatomic) | Atomic operation library.                                  |
-|  [libcmd](libcmd)       | Based on readline, a bash like library.                    |
-|  [libconfig](libconfig) | Configure library, support ini, json.                      |
-|  [libdict](libdict)     | Hash key-value dictonary library.                          |
-|  [libdlmod](libdlmod)   | Dynamic linking loader wrapper library.                    |
-|  [libgevent](libgevent) | Reactor event library, like libevent                       |
-|  [libhash](libhash)     | Hash key-value library based on hlist from kernel.         |
-|  [libipc](libipc)       | Inter-Process Communication, support mqueue/netlink/shm.   |
-|  [liblog](liblog)       | Log library, support console/file/rsyslog.                 |
-|  [libmacro](libmacro)   | Basic Macro define library, include kernel list and so on. |
-|  [libosal](libosal)     | OSAL(Operating System Abstraction Layer) library.          |
-|  [libp2p](libp2p)       | High level p2p punch hole library, easy API to use.        |
-|  [libptcp](libptcp)     | Pseudo Tcp Socket over UDP, rewrite with C from libjingle. |
-|  [librbtree](librbtree) | Librbtree comes from linux kernel rbtree.                  |
-|  [librpc](librpc)       | Remote Procedure Call library.                             |
-|  [libskt](libskt)       | Socket wrapper library for easy use.                       |
-|  [libstun](libstun)     | STUN protocol wrapper library.                             |
-|  [libtime](libtime)     | Time wrapper library for easy use.                         |
-|  [liblock](liblock)     | Lock/mutex/sem wrapper library for easy use.               |
-|  [libthread](libthread) | Thread wrapper library for easy use.                       |
-|  [libworkq](libworkq)   | Work queue in userspace like work-queue/tasklet in kernel. |
+## Network
+* librtsp: Real Time Streaming Protocol server for ipcamera or NVR
+* librtmpc: Real Time Messaging Protocol client for liveshow
+* libskt: socket warpper api for easily use
+* librpc: Remote Procedure Call library
+* libipc: Inter-Process Communication, support mqueue/netlink/shm
+* libp2p: High level p2p punch hole library, easy API to use
+* libhomekit: Apple homekit protocol
+
+## Async
+* libgevent: Reactor event, like libevent
+* libthread: Thread wrapper
+* libworkq: Work queue in userspace
+
+## I/O
+* libbase64: Base64/32 encode/decode
+* libconfig: Support ini/json
+* liblog: Support console/file/rsyslog
+* libfile: File operations
+* libstrex:
+* libsubmask: ip addr transform
+
+## Multi-Media
+* libuvc: USB video class V4L2/dshow
+* libmp4parser: MP4 format parser
+* libjpeg-ex:
+* libmedia-io: audio/video frame/packet define
+
+## OS Abstraction Layer
+* libposix4win: posix adapter for Windows
+* libposix4rtos: posix adapter for FreeRTOS
+
+## Misc
+* libdebug: Help to trace crash like gdb
+* libhal: hardware Abstraction Layer
+* libplugin: Dynamic link plugin
+* libtime: Time wrapper
+* libfsm: Finite State Machine
 
 ## How To Build
-Recommend Ubuntu14.04 gcc-4.8.4+
-  * linux platform (32/64 bit)  
-   `$ cd libraries`  
-   `$ ./build.sh`  
-   `$ sudo ./build.sh install`
-
-  * host(linux) target(rasberrypi)  
-    (you need download [toolchain of rasberrypi](https://github.com/raspberrypi/tools.git))  
-   `$ ./build.sh all pi`
-
-  * host(rasberrypi board)  
-   `$ ./build.sh`  
-   `$ sudo ./build.sh install`  
-
-  * android arm cross compile  
-   (you need download [android-ndk-r9-linux-x86_64.tar.bz2](http://dl.google.com/android/ndk/android-ndk-r9-linux-x86_64.tar.bz2))  
-   `$ ./build.sh all android`  
-
-  * android naitve develop  
-    also need ndk tools  
-   `$ cd android_jni_libs`  
-   `$ ndk-build`  
-
-   After install, the libxxx.xx will be installed in /usr/local/lib/.  
-   libxxx.h, libxxx.so or libxxx.a of libraries are also in ./output/$(ARCH)  
-
-## How To Autogen C code
-   If you want to add your own library into the build script, no need repeat the same code, only auto gen libxxx framework.  
-  `$ ./autogen_lib.sh libfoo`
-
-## About Build
-  * by default, build x86 on linux, and libxxx folder can be built independently
-  * if only "libxxx folder" is checkout without "build folder", you can only build x86 and no color set
-  * with "build folder", you can build x86, pi, android, ios and color is also set
-  * "sudo make install" is needed when build libxxx alone.
+Please refer to [INSTALL.md](https://github.com/gozfree/gear-lib/blob/master/INSTALL.md) file for detailed information.
 
 ## License
-GPL. Please refer to the LICENSE file for detailed information.
+Please refer to the [LICENSE](https://github.com/gozfree/gear-lib/blob/master/LICENSE.MIT) file for detailed information.
 
-## Author & Contributing
-Welcome pull request to the libraries.  
-gozfree <gozfree@163.com>
+## Contacts
+* Email: gozfree@163.com
+* QQ Group: 695515645
+* Github: [gear-lib](https://github.com/gozfree/gear-lib)
+* Gitee: [gear-lib](https://gitee.com/gozfreee/gear-lib)
